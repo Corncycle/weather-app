@@ -1,37 +1,27 @@
 import './stylesheets/meyer-reset.css'
 import './stylesheets/style.css'
-import { queryByCity } from './scripts/apiQuery'
 
-const btn = document.querySelector('.query-button')
-const lousyBtn = document.querySelector('.lousy-query-button')
-const feelsElt = document.querySelector('.description')
-const tempElt = document.querySelector('.temperature')
-const locElt = document.querySelector('.location')
+import { EventHandler } from './scripts/EventHandler.js'
 
-btn.addEventListener('click', async (e) => {
-  const res = await queryByCity('Woodinville')
-  if (!res) {
-    feelsElt.innerText = 'Unknown'
-    tempElt.innerText = -1
-    locElt.innerText = 'Nowhere'
-    return
-  }
-  const [feels, temp, loc] = res
-  feelsElt.innerText = 'Feels like ' + feels
-  tempElt.innerText = temp
-  locElt.innerText = loc
+const eventHandler = new EventHandler()
+
+// eventHandler.handleQuery('Seattle')
+
+const unitsButtons = document.querySelectorAll(
+  '.info__units, .info__feels-units'
+)
+unitsButtons.forEach((button) => {
+  button.addEventListener('click', (e) => {
+    eventHandler.toggleUnits()
+  })
 })
 
-lousyBtn.addEventListener('click', async (e) => {
-  const res = await queryByCity('safsdaf8$#%# 3j4%#$JKDSJFasf984')
-  if (!res) {
-    feelsElt.innerText = 'Unknown'
-    tempElt.innerText = -1
-    locElt.innerText = 'Nowhere'
-    return
+const cityFormButton = document.querySelector('.city-form__button')
+const cityFormText = document.querySelector('.city-form__text')
+cityFormButton.addEventListener('click', (e) => {
+  if (cityFormText.validity.valid) {
+    e.preventDefault()
+    eventHandler.handleQuery(cityFormText.value)
+    cityFormText.value = ''
   }
-  const [feels, temp, loc] = res
-  feelsElt.innerText = 'Feels like ' + feels
-  tempElt.innerText = temp
-  locElt.innerText = loc
 })

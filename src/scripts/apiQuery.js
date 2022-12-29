@@ -1,4 +1,5 @@
-// Just doing this to test if github's api key detector will catch it
+// Just doing this out of curiosity if github's api key detector will catch it
+// obviously not secure at all
 const k1 = '3bd07761d9fb'
 const k2 = 'beebf83da7'
 const k3 = '0e5b404eaf'
@@ -10,11 +11,18 @@ export async function queryByCity(city) {
     return false
   }
   console.log('Yep, ' + city + ' is a valid city name')
-  const resJson = await sendQueryByCity(city)
-  const temp = resJson.main.temp
-  const loc = resJson.name
-  const feels = resJson.main.feels_like
-  return [feels, temp, loc]
+  try {
+    const resJson = await sendQueryByCity(city)
+    const temp = resJson.main.temp
+    const loc = resJson.name
+    const feels = resJson.main.feels_like
+    return [feels, temp, loc]
+  } catch (e) {
+    if (e.message === '404') {
+      console.log("oh yeah that's a 404 error")
+    }
+    return false
+  }
 }
 
 async function sendQueryByCity(city) {
@@ -23,6 +31,9 @@ async function sendQueryByCity(city) {
   const response = await fetch(url, {
     mode: 'cors',
   })
+  if (!response.ok) {
+    throw new Error('404')
+  }
   return response.json()
 }
 

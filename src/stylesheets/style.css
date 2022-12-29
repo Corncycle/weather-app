@@ -1,9 +1,130 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
-:root {
-    font-family: "Roboto";
+.query-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
 }
 
-* {
+a {
+    font-weight: 300;
+    color: white;
+}
+
+a:active {
     color: tomato;
+}
+
+:root {
+    box-sizing: border-box;
+    font-family: "Roboto";
+    color: white;
+    --search-padding: 0.3rem;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    background: url(../images/background.jpg) no-repeat;
+    background-size: cover;
+    background-position: bottom;
+}
+
+.main-section {
+    flex: 1 0 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.info__feels-units, .info__units {
+    cursor: pointer;
+    border-radius: 0.3em;
+    padding: 0.1em;
+}
+
+.info__feels-units:hover, .info__units:hover {
+    background: rgba(0.2, 0.2, 0.2, 0.3)
+}
+
+.feels-block {
+    position: relative;
+    z-index: 2;
+}
+
+.info__feels-like, .info__feels-units {
+    font-size: 1.25rem;
+}
+
+.info__location {
+    font-weight: 100;
+    font-size: 2.5rem;
+}
+
+.temperature-block {
+    display: flex
+}
+
+.info__temperature {
+    font-size: 6rem;
+    font-weight: 500;
+}
+
+.info__units {
+    font-size: 2.5rem;
+    align-self: flex-start;
+}
+
+.img-credit {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+}
+
+.city-form {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    opacity: 0.8;
+}
+
+.city-form__text {
+    background: none;
+    color: white;
+    border: 2px solid white;
+    border-radius: 100rem;
+    font-size: 1rem;
+    padding: var(--search-padding) 2.2rem var(--search-padding) calc(2 * var(--search-padding));
+}
+
+.city-form__text:active, .city-form__text:focus {
+    outline: none;
+}
+
+.city-form__button {
+    cursor: pointer;
+    --search-button-margin: 0.2rem;
+    transform: scaleX(-1);
+    background: url("../images/search.svg");
+    background-size: 100% auto;
+    border: none;
+    position: absolute;
+    right: 0.5rem;
+    top: var(--search-button-margin);
+    height: calc(100% - 2 * var(--search-button-margin));
+    aspect-ratio: 1 / 1;
+    filter: invert(1);
+}
+
+@media (max-width: 700px) {
+    .secondary-info:nth-child(2) {
+        display: none;
+    }
 }

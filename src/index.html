@@ -7,14 +7,32 @@
   <title>Document</title>
 </head>
 <body>
-  Weather App
-  <button class="query-button">Make Query</button>
-  <button class="lousy-query-button">Make Lousy Query</button>
-  <div class="description">Unknown</div>
-  <div class="location">Nowhere</div>
-  <div>
-    <span class="temperature">-1</span>
-    <span>°F</span>
+  <div class="main-section">
+    <div class="info">
+      <div class="feels-block">
+        <span class="info__feels-like">Unknown</span>
+        <span class="info__feels-units"></span>
+      </div>
+      <div class="info__location">Nowhere</div>
+      <div class="info-block">
+        <div class="temperature-block">
+          <span class="info__temperature">-1</span>
+          <span class="info__units">°F</span>
+        </div>
+        <div class="info-block__divider"></div>
+        <div class="additional-info"></div>
+      </div>
+    </div>
+    <div class="secondary-info">
+      im section 2
+    </div>
+    <form action="#" class="city-form">
+      <input type="text" class="city-form__text" required>
+      <button class="city-form__button"></button>
+    </form>
+  </div>
+  <div class="img-credit">
+    <a href="https://unsplash.com/photos/5LOhydOtTKU">Background Image</a>
   </div>
 </body>
 </html>
