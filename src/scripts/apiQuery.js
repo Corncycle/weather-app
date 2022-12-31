@@ -1,4 +1,7 @@
 // Just doing this out of curiosity if github's api key detector will catch it
+
+import { capitalizeFirst } from './util'
+
 // obviously not secure at all
 const k1 = '3bd07761d9fb'
 const k2 = 'beebf83da7'
@@ -7,27 +10,27 @@ const k = k1 + k2 + k3
 
 export async function queryByCity(city) {
   if (!isValidCityName(city)) {
-    console.log('Nope, ' + city + ' is not a valid city name')
-    return false
+    throw new Error(city + ' is not a valid city name')
   }
-  console.log('Yep, ' + city + ' is a valid city name')
   try {
     const resJson = await sendQueryByCity(city)
     const temp = resJson.main.temp
     const loc = resJson.name
     const feels = resJson.main.feels_like
-    return [feels, temp, loc]
+    const weather = capitalizeFirst(resJson.weather[0].description)
+    return [feels, temp, loc, weather]
   } catch (e) {
     if (e.message === '404') {
-      console.log("oh yeah that's a 404 error")
+      throw new Error('Could not find city "' + city + '"')
     }
-    return false
+    console.log('we need to implement handling for the following error:')
+    console.log(e)
+    throw new Error()
   }
 }
 
 async function sendQueryByCity(city) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${k}&units=imperial`
-  console.log('querying!')
   const response = await fetch(url, {
     mode: 'cors',
   })

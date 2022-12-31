@@ -1,33 +1,46 @@
 import { queryByCity } from './apiQuery.js'
+import { DOMError } from './DOMError.js'
 import { DOMMainContent } from './DOMMainContent.js'
 import { fahrToCel } from './util.js'
 
 export class EventHandler {
   constructor() {
-    this.units = 'C'
+    this.units = 'F'
     this.domMainContent = new DOMMainContent(this)
+    this.domError = new DOMError(this)
   }
 
   async handleQuery(city) {
-    const res = await queryByCity(city)
-    console.log(res)
-    if (!res) {
-      // TODO: handle error here
-      console.log('Bad request.')
-      return
+    try {
+      this.domMainContent.showLoading()
+      const res = await queryByCity(city)
+      const [feels, temp, loc, weather] = res
+      this.savedFeels = feels
+      this.savedTemp = temp
+      this.savedLoc = loc
+      this.savedWeather = weather
+      this.submitToDOM(feels, temp, loc, weather)
+    } catch (e) {
+      this.domError.raiseError(e.message)
+      this.submitToDOM(
+        this.savedFeels,
+        this.savedTemp,
+        this.savedLoc,
+        this.savedWeather
+      )
     }
-    const [feels, temp, loc] = res
-    this.savedFeels = feels
-    this.savedTemp = temp
-    this.savedLoc = loc
-    this.submitToDOM(feels, temp, loc)
   }
 
-  submitToDOM(feels, temp, loc) {
+  submitToDOM(feels, temp, loc, weather) {
     if (this.units === 'C') {
-      this.domMainContent.update(fahrToCel(feels), fahrToCel(temp), loc)
+      this.domMainContent.update(
+        fahrToCel(feels),
+        fahrToCel(temp),
+        loc,
+        weather
+      )
     } else {
-      this.domMainContent.update(feels, temp, loc)
+      this.domMainContent.update(feels, temp, loc, weather)
     }
   }
 
@@ -37,6 +50,11 @@ export class EventHandler {
     } else {
       this.units = 'C'
     }
-    this.submitToDOM(this.savedFeels, this.savedTemp, this.savedLoc)
+    this.submitToDOM(
+      this.savedFeels,
+      this.savedTemp,
+      this.savedLoc,
+      this.savedWeather
+    )
   }
 }

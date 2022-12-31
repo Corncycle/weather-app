@@ -9,27 +9,39 @@
 <body>
   <div class="main-section">
     <div class="info">
-      <div class="feels-block">
-        <span class="info__feels-like">Unknown</span>
-        <span class="info__feels-units"></span>
-      </div>
-      <div class="info__location">Nowhere</div>
-      <div class="info-block">
-        <div class="temperature-block">
-          <span class="info__temperature">-1</span>
-          <span class="info__units">°F</span>
+      <div class="info-container info-container--disabled">
+        <div class="feels-block">
+          <span class="info__feels-like">Unknown</span>
+          <span class="info__feels-units"></span>
         </div>
-        <div class="info-block__divider"></div>
-        <div class="additional-info"></div>
+        <div class="info__location">Nowhere</div>
+        <div class="info-block">
+          <div class="temperature-block">
+            <span class="info__temperature">-1</span>
+            <span class="info__units">°F</span>
+          </div>
+          <div class="info-block__divider"></div>
+          <div class="additional-info"></div>
+        </div>
+      </div>
+      <div class="loading-container">
+        <img src="<%= require('./images/loading.svg') %>" alt="A Loading Symbol" class="loading__image">
       </div>
     </div>
     <div class="secondary-info">
-      im section 2
+      <span class="secondary-info__weather"></span>
     </div>
     <form action="#" class="city-form">
       <input type="text" class="city-form__text" required>
       <button class="city-form__button"></button>
     </form>
+  </div>
+  <div class="error-container error-container--disabled">
+    <div class="error__remover"></div>
+    <div class="error">
+      <span class="error__message"></span>
+      <button class="error__close">Close</button>
+    </div>
   </div>
   <div class="img-credit">
     <a href="https://unsplash.com/photos/5LOhydOtTKU">Background Image</a>

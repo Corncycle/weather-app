@@ -9,3 +9,7 @@ export function celToFahr(n) {
 export function roundToNumDigits(x, numDigits) {
   return Math.round(x * 10 ** numDigits) / 10 ** numDigits
 }
+
+export function capitalizeFirst(s) {
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
